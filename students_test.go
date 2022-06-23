@@ -109,23 +109,37 @@ func TestNew(t *testing.T) {
 }
 
 func TestMatrix_Rows(t *testing.T) {
-	matrix, _ := New("1 1 1\n2 2 2\n3 3 3")
-	var value = [3][3]int{{1,1,1},{2,2,2},{3,3,3}}
+	mat, _ := New("1 1 1\n2 2 2\n3 3 3")
+	compare := mat.Rows()
+	expvalue := [][]int{{1,1,1},{2,2,2},{3,3,3}}
 
-	if !reflect.DeepEqual(value, matrix.Rows()){
-		t.Errorf("expected to get %v, but actual is %v", value, matrix.Rows())
+	if !reflect.DeepEqual(compare, expvalue){
+		t.Errorf("expected to get %v, but actual is %v", expvalue, compare)
 	}
 }
 
 func TestMatrix_Cols(t *testing.T) {
-	matrix, _ := New("1 1 1\n2 2 2\n3 3 3")
-	var value = [3][3]int{{1,2,3},{1,2,3},{1,2,3}}
+	mat, _ := New("1 1 1\n2 2 2\n3 3 3")
+	expvalue := [][]int{{1,2,3},{1,2,3},{1,2,3}}
 
-	if !reflect.DeepEqual(value, matrix.Cols()){
-		t.Errorf("expected to get %v, but actual is %v", value, matrix.Cols())
+	if !reflect.DeepEqual(expvalue, mat.Cols()){
+		t.Errorf("expected to get %v, but actual is %v", expvalue, mat.Cols())
 	}
 }
 
 func TestMatrix_Set(t *testing.T) {
-
+	mat, _ := New("1 1 1\n2 2 2\n3 3 3")
+	expvalue := &Matrix{3,3, []int{5,1,1,2,2,2,3,3,3}}
+	result := mat.Set(0,0,5)
+	if result {
+		if !reflect.DeepEqual(mat, expvalue) {
+			t.Errorf("expected to get %v, but actual is %v", expvalue, mat)
+		}
+	} else {
+		t.Errorf("expected to get True, but actual is %v", result)
+	}
+	result = mat.Set(4,3,9)
+	if result {
+		t.Errorf("expected to get False, but actual is %v", result)
+	}
 }
